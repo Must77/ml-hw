@@ -126,18 +126,17 @@ def handle_lotarea_outliers(df: pd.DataFrame) -> pd.DataFrame:
     """
     df = df.copy()
 
-    # 将负值替换为 NaN, 并删除
-    def clean_lotarea_value(x):
-        if pd.isna(x):
-            return np.nan
-        if x < 0:
-            return np.nan
-        return x
-    df['LotArea'] = df['LotArea'].apply(clean_lotarea_value)
+    # 负值认为是错误数据, 直接删除
+    mask = (df['LotArea'] >= 0) | (df['LotArea'].isna())    
     before_rows = df.shape[0]
-    df = df.dropna(subset=['LotArea']).reset_index(drop=True)
+    df = df[mask].reset_index(drop=True)
     after_rows = df.shape[0]
-    print(f"由于土地面积异常值或者缺失值删除 {before_rows - after_rows} 行")
+    print(f"由于土地面积异常值删除 {before_rows - after_rows} 行")
+
+    # NaN 认为是用户未提供土地面积， 用平均值填充
+    lot_mean = df['LotArea'].mean()
+    if df['LotArea'].isna().sum() > 0:
+        df['LotArea'] = df['LotArea'].fillna(lot_mean)
 
     # Winsorize: 限制下 1 百分位和上 99 百分位
     lower = df['LotArea'].quantile(0.01)

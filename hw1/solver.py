@@ -50,6 +50,7 @@ def missing_value_summary(df: pd.DataFrame) -> pd.DataFrame:
     total = df.isna().sum()
     percent = (total / len(df)) * 100
     summary = pd.DataFrame({'missing_count': total, 'missing_percent': percent})
+    summary = summary.sort_values(by='missing_count', ascending=False)
     return summary
 
 

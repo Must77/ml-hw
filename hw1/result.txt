@@ -1,0 +1,74 @@
+codespace@codespaces-720515:/workspaces/ml-hw/hw1$ python3 solver.py 
+
+任务 1: 缺失值分析和处理:
+              missing_count  missing_percent
+MiscFeature              80             80.0
+GarageCars                2              2.0
+PoolArea                  1              1.0
+LotArea                   1              1.0
+BedroomAbvGr              1              1.0
+SalePrice                 1              1.0
+Id                        0              0.0
+KitchenQual               0              0.0
+YearBuilt                 0              0.0
+由于缺失售价删除 1 行
+
+任务 2: 异常值检测与处理:
+由于土地面积异常值删除 1 行
+土地面积1%: 6004.08, 99%: 60300.00
+
+任务 3: 特征缩放:
+标准化前:                       mean          std
+LotArea       11503.142530  8367.128487
+YearBuilt      1984.857143    19.264304
+BedroomAbvGr      2.908163     1.485925
+GarageCars        1.418367     1.054431
+PoolArea          6.185567    23.113997
+标准化后:                       mean       std
+LotArea       4.531523e-17  1.005141
+YearBuilt    -1.683461e-15  1.005141
+BedroomAbvGr -4.531523e-18  1.005141
+GarageCars    1.042250e-16  1.005141
+PoolArea      9.156479e-18  1.005195
+
+任务 4: 输出结果和总结:
+
+=== 形状 ===
+处理前形状: (100, 9), 处理后形状: (98, 10)
+
+=== 缺失值汇总 ===
+              missing_count  missing_percent
+MiscFeature              80             80.0
+GarageCars                2              2.0
+PoolArea                  1              1.0
+LotArea                   1              1.0
+BedroomAbvGr              1              1.0
+SalePrice                 1              1.0
+Id                        0              0.0
+KitchenQual               0              0.0
+YearBuilt                 0              0.0
+
+=== 标准化前的数值统计 ===
+                      mean          std
+LotArea       11503.142530  8367.128487
+YearBuilt      1984.857143    19.264304
+BedroomAbvGr      2.908163     1.485925
+GarageCars        1.418367     1.054431
+PoolArea          6.185567    23.113997
+
+=== 标准化后的数值统计 ===
+                      mean       std
+LotArea       4.531523e-17  1.005141
+YearBuilt    -1.683461e-15  1.005141
+BedroomAbvGr -4.531523e-18  1.005141
+GarageCars    1.042250e-16  1.005141
+PoolArea      9.156479e-18  1.005195
+
+处理后数据集的前 5 行:
+   Id   LotArea  YearBuilt  BedroomAbvGr KitchenQual  GarageCars  PoolArea MiscFeature      SalePrice  KitchenQual_Ordinal
+0   1  0.243258   1.311863      0.738564          TA    0.554444 -0.269002        None  235328.658410                    3
+1   2 -0.084431   1.364039     -0.614319          Po    1.507699 -0.269002        None  185301.350508                    1
+2   3  0.054579  -0.096899     -0.614319          Fa   -1.352066 -0.269002        None  171991.615913                    2
+3   4  0.357824  -0.149075      0.062122          TA   -0.398811 -0.269002        None  287413.675825                    3
+4   5  0.268127   1.833627     -1.290761          Po   -0.398811 -0.269002        None  215237.988563                    1
+保存到 house_data_processed.csv

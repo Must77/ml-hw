@@ -92,15 +92,12 @@ def impute_missing_values(df: pd.DataFrame) -> pd.DataFrame:
     df['BedroomAbvGr'] = df['BedroomAbvGr'].fillna(fill_bedroom)
 
     # 厨房质量:
-    # 先映射为有序数, NaN 认为是错误数据, 用众数填充
-    mapping = {'Ex': 5, 'Gd': 4, 'TA': 3, 'Fa': 2, 'Po': 1}
-    reverse_mapping = {v: k for k, v in mapping.items()}
-
-    df['KitchenQual_Ordinal'] = df['KitchenQual'].map(mapping).astype(int)
-    ordinal_modes = df['KitchenQual_Ordinal'].mode(dropna=True)
-    fill_kitchen_ordinal = ordinal_modes[0]
-    fill_kitchen = reverse_mapping[fill_kitchen_ordinal]
+    # NaN 认为是错误数据, 用众数填充, 然后转换为有序数
+    kitchen_modes = df['KitchenQual'].mode(dropna=True)
+    fill_kitchen = kitchen_modes[0]
     df['KitchenQual'] = df['KitchenQual'].fillna(fill_kitchen)
+    mapping = {'Ex': 5, 'Gd': 4, 'TA': 3, 'Fa': 2, 'Po': 1}
+    df['KitchenQual_Ordinal'] = df['KitchenQual'].map(mapping).astype(int)
 
     # 其他特征:
     # NaN 认为是没有特征, 用 'None' 填充

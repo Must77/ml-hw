@@ -75,7 +75,7 @@ def impute_missing_values(df: pd.DataFrame) -> pd.DataFrame:
         return x
     df['GarageCars'] = df['GarageCars'].apply(clean_garage_value)
     garage_modes = df['GarageCars'].mode()
-    fill_garage = int(garage_modes.median()) if len(garage_modes) > 0 else 0
+    fill_garage = garage_modes[0]
     df['GarageCars'] = df['GarageCars'].fillna(fill_garage)
 
     # 卧室数量:
@@ -88,7 +88,7 @@ def impute_missing_values(df: pd.DataFrame) -> pd.DataFrame:
         return x
     df['BedroomAbvGr'] = df['BedroomAbvGr'].apply(clean_bedroom_value)
     bed_modes = df['BedroomAbvGr'].mode()
-    fill_bedroom = int(bed_modes.median()) if len(bed_modes) > 0 else 0
+    fill_bedroom = bed_modes[0]
     df['BedroomAbvGr'] = df['BedroomAbvGr'].fillna(fill_bedroom)
 
     # 厨房质量:
@@ -98,7 +98,7 @@ def impute_missing_values(df: pd.DataFrame) -> pd.DataFrame:
 
     df['KitchenQual_Ordinal'] = df['KitchenQual'].map(mapping).astype(int)
     ordinal_modes = df['KitchenQual_Ordinal'].mode(dropna=True)
-    fill_kitchen_ordinal = int(ordinal_modes.median()) if len(ordinal_modes) > 0 else 3
+    fill_kitchen_ordinal = ordinal_modes[0]
     fill_kitchen = reverse_mapping[fill_kitchen_ordinal]
     df['KitchenQual'] = df['KitchenQual'].fillna(fill_kitchen)
 
